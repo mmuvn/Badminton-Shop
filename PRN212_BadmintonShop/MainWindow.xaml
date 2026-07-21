@@ -1,0 +1,81 @@
+<Window x:Class="PRN212_BadmintonShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Badminton Shop" Height="768" Width="1024"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Navigation Panel -->
+        <Border Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="16">
+                    <TextBlock Text="Badminton Shop" FontSize="20" FontWeight="Bold" Margin="0,0,0,16" />
+                    
+                    <TextBox x:Name="txtSearch" materialDesign:HintAssist.Hint="Search products..." 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                             Margin="0,0,0,16" />
+                    
+                    <ComboBox x:Name="cboCategory" materialDesign:HintAssist.Hint="Category" 
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                              Margin="0,0,0,16">
+                        <ComboBoxItem Content="All" IsSelected="True" />
+                        <ComboBoxItem Content="Racket" />
+                        <ComboBoxItem Content="Shirt" />
+                        <ComboBoxItem Content="Shoe" />
+                        <ComboBoxItem Content="String" />
+                        <ComboBoxItem Content="Grip" />
+                    </ComboBox>
+                </StackPanel>
+
+                <ListView x:Name="lvNavigation" Grid.Row="1" Margin="0" Background="Transparent" SelectionChanged="LvNavigation_SelectionChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="16,12" />
+                            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                    <ListViewItem x:Name="navProducts" Content="Product Catalog" />
+                    <ListViewItem x:Name="navRequestService" Content="Request Service" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ListViewItem x:Name="navCheckout" Content="Checkout" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    
+                    <ListViewItem x:Name="navOrderQueue" Content="Order Queue" Visibility="{Binding IsStaffOrAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ListViewItem x:Name="navServiceQueue" Content="Service Queue" Visibility="{Binding IsStaffOrAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    
+                    <ListViewItem x:Name="navManageProducts" Content="Manage Products" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ListViewItem x:Name="navManageUsers" Content="Manage Users" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ListViewItem x:Name="navReports" Content="Reports" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </ListView>
+
+                <Button Grid.Row="2" Content="LOGOUT" Margin="16" Click="BtnLogout_Click" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" HorizontalAlignment="Left" />
+            </Grid>
+        </Border>
+
+        <!-- Right Content Area -->
+        <ContentControl x:Name="MainContent" Grid.Column="1" Margin="16" />
+        
+    </Grid>
+</Window>
