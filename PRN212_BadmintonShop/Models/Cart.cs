@@ -14,4 +14,6 @@ public partial class Cart
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual User Customer { get; set; } = null!;
+
+    public virtual ICollection<ServiceRequest> ServiceRequests { get; set; } = new List<ServiceRequest>();
 }

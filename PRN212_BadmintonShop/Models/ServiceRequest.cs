@@ -17,7 +17,7 @@ public partial class ServiceRequest
 
     public int? StringProductId { get; set; }
 
-    public string? RequestedTension { get; set; }
+    public decimal? RequestedTension { get; set; }
 
     public string? Description { get; set; }
 
@@ -35,9 +35,19 @@ public partial class ServiceRequest
 
     public DateTime? CompletedDate { get; set; }
 
+    public int? CartId { get; set; }
+
+    public bool IsPaid { get; set; }
+
+    public int? OrderId { get; set; }
+
     public virtual User? AssignedStaff { get; set; }
 
+    public virtual Cart? Cart { get; set; }
+
     public virtual User Customer { get; set; } = null!;
+
+    public virtual Order? Order { get; set; }
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 

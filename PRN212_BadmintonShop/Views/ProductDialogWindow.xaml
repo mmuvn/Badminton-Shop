@@ -1,0 +1,156 @@
+<Window x:Class="PRN212_BadmintonShop.Views.ProductDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Product Dialog" Height="700" Width="500"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    
+    <Window.Resources>
+        <!-- Converters could be added here if needed -->
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Product Information" FontSize="24" FontWeight="Bold" Margin="0,0,0,16" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,16,0">
+            <StackPanel x:Name="spMainForm">
+                
+                <!-- Base Product Fields -->
+                <ComboBox x:Name="cbCategory" materialDesign:HintAssist.Hint="Category" 
+                          DisplayMemberPath="CategoryName" SelectedValuePath="CategoryId" 
+                          Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                
+                <TextBox x:Name="txtProductName" materialDesign:HintAssist.Hint="Product Name" 
+                         Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                         
+                <TextBox x:Name="txtBrand" materialDesign:HintAssist.Hint="Brand" 
+                         Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                         
+                <TextBox x:Name="txtDescription" materialDesign:HintAssist.Hint="Description" 
+                         Margin="0,0,0,16" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="100"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                         
+                <TextBox x:Name="txtPrice" materialDesign:HintAssist.Hint="Price" 
+                         Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                         
+                <TextBox x:Name="txtStock" materialDesign:HintAssist.Hint="Stock Quantity" 
+                         Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                <CheckBox x:Name="chkIsActive" Content="Is Active" Margin="0,0,0,24" IsChecked="True" />
+
+                <Separator Margin="0,0,0,16" />
+                <TextBlock Text="Category Specific Details" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16" />
+
+                <!-- Dynamic Detail Panels -->
+                
+                <!-- Racket Details -->
+                <StackPanel x:Name="pnlRacket">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cbCategory, Path=SelectedItem.CategoryName}" Value="Racket">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBox x:Name="txtRacketColor" materialDesign:HintAssist.Hint="Color" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtRacketTension" materialDesign:HintAssist.Hint="Max Tension (Lbs)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtRacketWeight" materialDesign:HintAssist.Hint="Frame Weight (Grams)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+
+                <!-- Shoe Details -->
+                <StackPanel x:Name="pnlShoe">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cbCategory, Path=SelectedItem.CategoryName}" Value="Shoe">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBox x:Name="txtShoeColor" materialDesign:HintAssist.Hint="Color" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtShoeSize" materialDesign:HintAssist.Hint="Size" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+
+                <!-- Shirt Details -->
+                <StackPanel x:Name="pnlShirt">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cbCategory, Path=SelectedItem.CategoryName}" Value="Shirt">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBox x:Name="txtShirtColor" materialDesign:HintAssist.Hint="Color" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtShirtSize" materialDesign:HintAssist.Hint="Size (e.g. S, M, L)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtShirtMaterial" materialDesign:HintAssist.Hint="Material" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtShirtSleeve" materialDesign:HintAssist.Hint="Sleeve Type (Short/Long)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtShirtGender" materialDesign:HintAssist.Hint="Gender (Men/Women/Unisex)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+
+                <!-- String Details -->
+                <StackPanel x:Name="pnlString">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cbCategory, Path=SelectedItem.CategoryName}" Value="String">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBox x:Name="txtStringColor" materialDesign:HintAssist.Hint="Color" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtStringDurability" materialDesign:HintAssist.Hint="Durability (1-10)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtStringRepulsion" materialDesign:HintAssist.Hint="Repulsion (1-10)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtStringSound" materialDesign:HintAssist.Hint="Sound (1-10)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtStringControl" materialDesign:HintAssist.Hint="Control (1-10)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtStringShock" materialDesign:HintAssist.Hint="Shock Absorption (1-10)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+
+                <!-- Grip Details -->
+                <StackPanel x:Name="pnlGrip">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cbCategory, Path=SelectedItem.CategoryName}" Value="Grip">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBox x:Name="txtGripThickness" materialDesign:HintAssist.Hint="Thickness (mm)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtGripMaterial" materialDesign:HintAssist.Hint="Material (e.g. PU, Towel)" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txtGripColor" materialDesign:HintAssist.Hint="Color" Margin="0,0,0,16" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Cancel" Click="BtnCancel_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,8,0" />
+            <Button Content="Save" Click="BtnSave_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
+        </StackPanel>
+    </Grid>
+</Window>

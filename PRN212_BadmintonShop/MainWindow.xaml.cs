@@ -33,13 +33,28 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             var item = lvNavigation.SelectedItem as ListViewItem;
             if (item != null)
             {
-                MainContent.Content = new TextBlock 
-                { 
-                    Text = $"Navigate to: {item.Content}", 
-                    FontSize = 24, 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center 
-                };
+                string navName = item.Name;
+                switch (navName)
+                {
+                    case "navProducts":
+                        MainContent.Content = new Views.ProductCatalogView();
+                        break;
+                    case "navManageProducts":
+                        MainContent.Content = new Views.ManageProductsView();
+                        break;
+                    case "navManageUsers":
+                        MainContent.Content = new Views.ManageUsersView();
+                        break;
+                    default:
+                        MainContent.Content = new TextBlock 
+                        { 
+                            Text = $"View not implemented yet: {item.Content}", 
+                            FontSize = 24, 
+                            HorizontalAlignment = HorizontalAlignment.Center, 
+                            VerticalAlignment = VerticalAlignment.Center 
+                        };
+                        break;
+                }
             }
         }
     }
