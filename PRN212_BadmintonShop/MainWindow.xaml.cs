@@ -1,13 +1,12 @@
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace PRN212_BadmintonShop;
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
     public bool IsCustomer => AppState.CurrentUser?.Role?.RoleName == "Customer";
-    public bool IsStaffOrAdmin => AppState.CurrentUser?.Role?.RoleName == "Staff" || AppState.CurrentUser?.Role?.RoleName == "Admin";
+    public bool IsStaffOrAdmin => AppState.CurrentUser?.Role?.RoleName is "Staff" or "Admin";
     public bool IsAdmin => AppState.CurrentUser?.Role?.RoleName == "Admin";
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -16,46 +15,52 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         InitializeComponent();
         DataContext = this;
+        
+        // Default View is the Product Master-Detail view
+        MainContent.Content = new Views.ProductMasterDetailView();
     }
 
-    private void BtnLogout_Click(object sender, RoutedEventArgs e)
+    private void BtnProducts_Click(object sender, RoutedEventArgs e)
     {
-        AppState.CurrentUser = null;
-        LoginWindow loginWindow = new LoginWindow();
-        loginWindow.Show();
-        this.Close();
+        MainContent.Content = new Views.ProductMasterDetailView();
     }
 
-    private void LvNavigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void BtnRequestService_Click(object sender, RoutedEventArgs e)
     {
-        if (MainContent != null)
+        var dialog = new Views.ServiceRequestDialog();
+        dialog.Owner = this;
+        if (dialog.ShowDialog() == true)
         {
-            var item = lvNavigation.SelectedItem as ListViewItem;
-            if (item != null)
+            // If submitted successfully, refresh the cart count if the Master-Detail view is active
+            if (MainContent.Content is Views.ProductMasterDetailView pdView)
             {
-                string navName = item.Name;
-                switch (navName)
-                {
-                    case "navProducts":
-                        MainContent.Content = new Views.ProductCatalogView();
-                        break;
-                    case "navManageProducts":
-                        MainContent.Content = new Views.ManageProductsView();
-                        break;
-                    case "navManageUsers":
-                        MainContent.Content = new Views.ManageUsersView();
-                        break;
-                    default:
-                        MainContent.Content = new TextBlock 
-                        { 
-                            Text = $"View not implemented yet: {item.Content}", 
-                            FontSize = 24, 
-                            HorizontalAlignment = HorizontalAlignment.Center, 
-                            VerticalAlignment = VerticalAlignment.Center 
-                        };
-                        break;
-                }
+                pdView.UpdateCartCount();
             }
         }
+    }
+
+    private void BtnOrderQueue_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Order Queue View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+    }
+
+    private void BtnServiceQueue_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Service Queue View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+    }
+
+    private void BtnManageUsers_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new Views.ManageUsersView();
+    }
+
+    private void BtnReports_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Reports View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+    }
+
+    private void BtnSettings_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Settings View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
     }
 }
