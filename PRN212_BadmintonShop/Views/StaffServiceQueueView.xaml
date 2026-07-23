@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="PRN212_BadmintonShop.Views.StaffServiceQueueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <x:Array x:Key="ServiceTargetStatusList" Type="sys:String">
+            <sys:String>Todo</sys:String>
+            <sys:String>Doing</sys:String>
+            <sys:String>Done</sys:String>
+            <sys:String>Cancel</sys:String>
+        </x:Array>
+    </UserControl.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Service Queue" FontSize="24" FontWeight="Bold" Margin="0,0,0,16" />
+
+        <DataGrid x:Name="dgServices" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ServiceRequestId}" Width="50" />
+                <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="130" />
+                <DataGridTextColumn Header="Type" Binding="{Binding ServiceTypeName}" Width="110" />
+
+                <DataGridTemplateColumn Header="Requirement" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="View" Click="BtnViewDetails_Click" Tag="{Binding}"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" Padding="8,0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Status" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{StaticResource ServiceTargetStatusList}"
+                                      SelectedItem="{Binding SelectedStatus, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Cancel Reason" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding CancelReason, UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding ShowCancelReason, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Actions" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Save" Click="BtnSaveService_Click" Tag="{Binding}"
+                                    IsEnabled="{Binding IsSaveEnabled}"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

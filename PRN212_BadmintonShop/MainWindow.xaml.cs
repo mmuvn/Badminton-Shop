@@ -41,12 +41,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void BtnOrderQueue_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Order Queue View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+        MainContent.Content = new Views.StaffOrderQueueView();
     }
 
     private void BtnServiceQueue_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Service Queue View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+        MainContent.Content = new Views.StaffServiceQueueView();
     }
 
     private void BtnManageUsers_Click(object sender, RoutedEventArgs e)
