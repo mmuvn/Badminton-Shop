@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace PRN212_BadmintonShop.Models;
@@ -48,8 +48,6 @@ public partial class ServiceRequest
     public virtual User Customer { get; set; } = null!;
 
     public virtual Order? Order { get; set; }
-
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual ServiceRequestStatus ServiceStatus { get; set; } = null!;
 

@@ -18,9 +18,11 @@ public partial class AdminDashboardView : UserControl
         using var context = new BadmintonShopDbContext();
 
         // Top Cards
-        var totalIncome = context.Payments
-            .Where(p => p.PaymentStatus == "Completed")
-            .Sum(p => (decimal?)p.Amount) ?? 0;
+        // Total Income: sum of Paid orders and Paid services that are not already part of an order.
+        // Wait, CheckoutView sets OrderId for paid services, so we just sum TotalAmount of Paid/Completed orders.
+        var totalIncome = context.Orders
+            .Where(o => o.OrderStatus.StatusName == "Paid" || o.OrderStatus.StatusName == "Completed")
+            .Sum(o => (decimal?)o.TotalAmount) ?? 0;
             
         txtTotalIncome.Text = totalIncome.ToString("C");
 

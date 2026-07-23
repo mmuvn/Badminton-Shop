@@ -160,14 +160,7 @@ public partial class CheckoutView : UserControl
 
                 if (productTotal > 0)
                 {
-                    context.Payments.Add(new Payment
-                    {
-                        OrderId = order.OrderId,
-                        Amount = productTotal,
-                        PaymentMethod = "Cash",
-                        PaymentStatus = "Completed",
-                        PaidAt = DateTime.Now
-                    });
+                    // No Payment table needed
                 }
             }
 
@@ -177,15 +170,6 @@ public partial class CheckoutView : UserControl
             {
                 sr.IsPaid = true;
                 sr.OrderId = order.OrderId;
-                
-                context.Payments.Add(new Payment
-                {
-                    ServiceRequestId = sr.ServiceRequestId,
-                    Amount = sr.Price ?? 0,
-                    PaymentMethod = "Cash",
-                    PaymentStatus = "Completed",
-                    PaidAt = DateTime.Now
-                });
             }
 
             // 4. Clear CartItems
