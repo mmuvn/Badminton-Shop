@@ -36,6 +36,8 @@
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="Products" Click="BtnProducts_Click" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
                     
+                    <Button Content="My History" Click="BtnMyHistory_Click" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
                     <Button Content="Request Service" Click="BtnRequestService_Click" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
                     
                     <Button Content="Order Queue" Click="BtnOrderQueue_Click" Visibility="{Binding IsStaffOrAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
@@ -43,7 +45,6 @@
                     
                     <Button Content="Manage Users" Click="BtnManageUsers_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
                     <Button Content="Reports" Click="BtnReports_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                    <Button Content="Settings" Click="BtnSettings_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignDarkForeground}" />
                 </StackPanel>
             </Grid>
         </Border>

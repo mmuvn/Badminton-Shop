@@ -85,6 +85,10 @@ public partial class ProductMasterDetailView : UserControl
         {
             _selectedProduct = p;
             PopulateForm(p);
+            if (btnAdd != null) btnAdd.Visibility = Visibility.Collapsed;
+            if (btnEdit != null) btnEdit.Visibility = Visibility.Visible;
+            if (btnDelete != null) btnDelete.Visibility = Visibility.Visible;
+            ValidateForm();
         }
     }
 
@@ -129,6 +133,7 @@ public partial class ProductMasterDetailView : UserControl
         {
             GenerateDynamicFields(cat.CategoryName, _selectedProduct);
         }
+        ValidateForm();
     }
 
     private void GenerateDynamicFields(string categoryName, Product? p)
@@ -180,6 +185,7 @@ public partial class ProductMasterDetailView : UserControl
         panel.Children.Add(new TextBlock { Text = label, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 0, 0, 4) });
         
         var tb = new TextBox { Name = "dyn_" + label.Replace(" ", "").Replace("(", "").Replace(")", ""), Text = value };
+        tb.TextChanged += Input_TextChanged;
         panel.Children.Add(tb);
         
         pnlDynamicFields.Children.Add(panel);
@@ -211,16 +217,43 @@ public partial class ProductMasterDetailView : UserControl
         txtStock.Text = "";
         txtDescription.Text = "";
         pnlDynamicFields.Children.Clear();
+
+        if (btnAdd != null) btnAdd.Visibility = Visibility.Visible;
+        if (btnEdit != null) btnEdit.Visibility = Visibility.Collapsed;
+        if (btnDelete != null) btnDelete.Visibility = Visibility.Collapsed;
+        ValidateForm();
+    }
+
+    private void Input_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ValidateForm();
+    }
+
+    private void ValidateForm()
+    {
+        if (!IsAdmin) return;
+        
+        bool isValid = cbCategory.SelectedItem != null &&
+                       !string.IsNullOrWhiteSpace(txtTitle.Text) &&
+                       !string.IsNullOrWhiteSpace(txtBrand.Text) &&
+                       !string.IsNullOrWhiteSpace(txtPrice.Text) &&
+                       !string.IsNullOrWhiteSpace(txtStock.Text);
+                       
+        if (btnAdd != null) btnAdd.IsEnabled = isValid;
+        if (btnEdit != null) btnEdit.IsEnabled = isValid;
     }
 
     private void BtnAdd_Click(object sender, RoutedEventArgs e)
     {
-        BtnClearForm_Click(sender, e);
-        // Focus category to start adding
-        cbCategory.Focus();
+        SaveProduct();
     }
 
-    private void BtnSave_Click(object sender, RoutedEventArgs e)
+    private void BtnEdit_Click(object sender, RoutedEventArgs e)
+    {
+        SaveProduct();
+    }
+
+    private void SaveProduct()
     {
         if (!IsAdmin) return;
         

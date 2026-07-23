@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PRN212_BadmintonShop.Views.StaffOrderQueueView"
+<UserControl x:Class="PRN212_BadmintonShop.Views.StaffOrderQueueView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -58,7 +58,7 @@
                         <DataTemplate>
                             <Button Content="Save" Click="BtnSaveOrder_Click" Tag="{Binding}"
                                     IsEnabled="{Binding IsSaveEnabled}"
-                                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" Padding="8,2" Height="28" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

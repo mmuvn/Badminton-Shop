@@ -20,37 +20,34 @@ public partial class ManageUsersView : UserControl
         dgUsers.ItemsSource = context.Users.Include(u => u.Role).ToList();
     }
 
+    private void BtnCreateUser_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new UserDialogWindow();
+        dialog.Owner = Window.GetWindow(this);
+        if (dialog.ShowDialog() == true)
+        {
+            LoadUsers();
+        }
+    }
+
     private void BtnToggleActive_Click(object sender, RoutedEventArgs e)
     {
-        var button = sender as Button;
-        var user = button?.DataContext as User;
-        if (user != null)
+        if (sender is Button btn && btn.Tag is User user)
         {
+            if (user.Role?.RoleName == "Admin")
+            {
+                MessageBox.Show("Cannot deactivate an Admin account.");
+                return;
+            }
+
             using var context = new BadmintonShopDbContext();
             var dbUser = context.Users.Find(user.UserId);
             if (dbUser != null)
             {
-                // Prevent admin from deactivating themselves
-                if (dbUser.UserId == AppState.CurrentUser?.UserId)
-                {
-                    MessageBox.Show("You cannot deactivate your own account.", "Action Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
                 dbUser.IsActive = !dbUser.IsActive;
                 context.SaveChanges();
                 LoadUsers();
             }
-        }
-    }
-
-    private void BtnChangeRole_Click(object sender, RoutedEventArgs e)
-    {
-        var button = sender as Button;
-        var user = button?.DataContext as User;
-        if (user != null)
-        {
-            MessageBox.Show($"Change Role for {user.Username} clicked. We'll implement a dialog for this later.", "Not Implemented");
         }
     }
 }

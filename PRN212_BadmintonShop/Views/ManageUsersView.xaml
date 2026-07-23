@@ -9,34 +9,38 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid Margin="16">
+    <Grid Margin="24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Manage Users" FontSize="24" FontWeight="Bold" Margin="0,0,0,16" />
+        <TextBlock Text="User Management" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
 
-        <DataGrid x:Name="dgUsers" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" 
-                  CanUserAddRows="False" SelectionMode="Single">
+        <DataGrid x:Name="dgUsers" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="0,0,0,16">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding UserId}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding FullName}" />
-                <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                <DataGridTextColumn Header="Role" Binding="{Binding Role.RoleName}" />
-                <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive}" />
-                <DataGridTemplateColumn Header="Actions">
+                <DataGridTextColumn Header="ID" Binding="{Binding UserId}" Width="50"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="150"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="250"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="150"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role.RoleName}" Width="100"/>
+                <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive}" Width="80"/>
+                
+                <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Toggle Active" Click="BtnToggleActive_Click" Margin="0,0,8,0" Style="{StaticResource MaterialDesignOutlinedButton}" />
-                                <Button Content="Change Role" Click="BtnChangeRole_Click" Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                <Button Content="Toggle Active" Click="BtnToggleActive_Click" Tag="{Binding}" Style="{StaticResource MaterialDesignOutlinedButton}" Padding="8,0" Height="24" Margin="0,0,8,0" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Create User" Click="BtnCreateUser_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Padding="16,8" />
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -18,6 +18,7 @@ public partial class RegisterWindow : Window
         string username = txtUsername.Text.Trim();
         string email = txtEmail.Text.Trim();
         string password = txtPassword.Password;
+        string confirmPassword = txtConfirmPassword.Password;
         string phone = txtPhone.Text.Trim();
         string address = txtAddress.Text.Trim();
 
@@ -25,6 +26,12 @@ public partial class RegisterWindow : Window
             string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             txtError.Text = "Please fill in all required fields (Name, Username, Email, Password).";
+            return;
+        }
+
+        if (password != confirmPassword)
+        {
+            txtError.Text = "Passwords do not match.";
             return;
         }
 

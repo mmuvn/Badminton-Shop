@@ -30,15 +30,18 @@
         <TextBox x:Name="txtFullName" Grid.Row="1" materialDesign:HintAssist.Hint="Full Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
         <TextBox x:Name="txtUsername" Grid.Row="2" materialDesign:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
         <TextBox x:Name="txtEmail" Grid.Row="3" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-        <PasswordBox x:Name="txtPassword" Grid.Row="4" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,0,0,16" />
-        <TextBox x:Name="txtPhone" Grid.Row="5" materialDesign:HintAssist.Hint="Phone Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
-        <TextBox x:Name="txtAddress" Grid.Row="6" materialDesign:HintAssist.Hint="Address" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,24" />
+        
+        <PasswordBox x:Name="txtPassword" Grid.Row="4" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" Margin="0,0,0,16" />
+        <PasswordBox x:Name="txtConfirmPassword" Grid.Row="5" materialDesign:HintAssist.Hint="Confirm Password" Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" Margin="0,0,0,16" />
 
-        <Button x:Name="btnRegister" Grid.Row="7" Content="REGISTER" Click="BtnRegister_Click" />
+        <TextBox x:Name="txtPhone" Grid.Row="6" materialDesign:HintAssist.Hint="Phone Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,16" />
+        <TextBox x:Name="txtAddress" Grid.Row="7" materialDesign:HintAssist.Hint="Address" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,24" />
 
-        <TextBlock x:Name="txtError" Grid.Row="8" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0" TextWrapping="Wrap"/>
+        <Button x:Name="btnRegister" Grid.Row="8" Content="REGISTER" Click="BtnRegister_Click" />
 
-        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center">
+        <TextBlock x:Name="txtError" Grid.Row="9" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0" TextWrapping="Wrap"/>
+
+        <StackPanel Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Already have an account? " VerticalAlignment="Center"/>
             <Button Content="Login" Style="{StaticResource MaterialDesignFlatButton}" Click="BtnLogin_Click" />
         </StackPanel>

@@ -84,19 +84,19 @@
                                   SelectionChanged="CbCategory_SelectionChanged" Margin="0,0,0,16" />
 
                         <TextBlock Text="Title *" FontWeight="SemiBold" Margin="0,0,0,4" />
-                        <TextBox x:Name="txtTitle" Margin="0,0,0,16" />
+                        <TextBox x:Name="txtTitle" Margin="0,0,0,16" TextChanged="Input_TextChanged" />
 
                         <TextBlock Text="Brand *" FontWeight="SemiBold" Margin="0,0,0,4" />
-                        <TextBox x:Name="txtBrand" Margin="0,0,0,16" />
+                        <TextBox x:Name="txtBrand" Margin="0,0,0,16" TextChanged="Input_TextChanged" />
 
                         <TextBlock Text="Price *" FontWeight="SemiBold" Margin="0,0,0,4" />
-                        <TextBox x:Name="txtPrice" Margin="0,0,0,16" />
+                        <TextBox x:Name="txtPrice" Margin="0,0,0,16" TextChanged="Input_TextChanged" />
 
                         <TextBlock Text="Stock *" FontWeight="SemiBold" Margin="0,0,0,4" />
-                        <TextBox x:Name="txtStock" Margin="0,0,0,16" />
+                        <TextBox x:Name="txtStock" Margin="0,0,0,16" TextChanged="Input_TextChanged" />
 
                         <TextBlock Text="Description" FontWeight="SemiBold" Margin="0,0,0,4" />
-                        <TextBox x:Name="txtDescription" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="80" Margin="0,0,0,16" />
+                        <TextBox x:Name="txtDescription" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="80" Margin="0,0,0,16" TextChanged="Input_TextChanged" />
 
                         <!-- Dynamic Specific Fields (Generated in CodeBehind or controlled via visibility) -->
                         <Separator Margin="0,0,0,16" />
@@ -110,26 +110,35 @@
                 </ScrollViewer>
 
                 <!-- Action Buttons (Bottom of Form) -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
-                    
-                    <!-- Customer Quantity & Add -->
-                    <StackPanel x:Name="pnlCustomerActions" Orientation="Horizontal" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="Qty:" VerticalAlignment="Center" Margin="0,0,8,0" />
-                        <TextBox x:Name="txtQuantity" Text="1" Width="40" Margin="0,0,16,0" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+                <Grid Grid.Row="2" Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left side: Add / Edit / Delete (Admin Only) -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button x:Name="btnAdd" Content="Add" Click="BtnAdd_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="0,0,8,0" IsEnabled="False" />
+                        <Button x:Name="btnEdit" Content="Edit" Click="BtnEdit_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="0,0,8,0" Visibility="Collapsed" />
+                        <Button x:Name="btnDelete" Content="Delete" Click="BtnDelete_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="IndianRed" BorderBrush="IndianRed" Margin="0,0,8,0" Visibility="Collapsed" />
                     </StackPanel>
 
-                    <Button x:Name="btnClearForm" Content="Clear" Click="BtnClearForm_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,8,0" />
-                    <Button x:Name="btnSave" Content="Save" Click="BtnSave_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatDarkBgButton}" />
-                </StackPanel>
+                    <!-- Right side: Clear / Customer Actions -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel x:Name="pnlCustomerActions" Orientation="Horizontal" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Text="Qty:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <TextBox x:Name="txtQuantity" Text="1" Width="40" Margin="0,0,16,0" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+                            <Button x:Name="btnAddToCartList" Content="Add to Cart" Click="BtnAddToCartList_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Margin="0,0,8,0" />
+                        </StackPanel>
+                        
+                        <Button x:Name="btnClearForm" Content="Clear" Click="BtnClearForm_Click" Style="{StaticResource MaterialDesignOutlinedButton}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Border>
 
         <!-- BOTTOM BAR (List Actions) -->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="8,8,8,8">
-            <Button x:Name="btnAdd" Content="+ Add New" Click="BtnAdd_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,8,0" />
-            <Button x:Name="btnDelete" Content="Delete" Click="BtnDelete_Click" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,8,0" />
-            <Button x:Name="btnAddToCartList" Content="Add to Cart" Click="BtnAddToCartList_Click" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,8,0" />
-            
             <Button x:Name="btnLogout" Content="Logout" Click="BtnLogout_Click" Style="{StaticResource MaterialDesignOutlinedButton}" />
         </StackPanel>
     </Grid>

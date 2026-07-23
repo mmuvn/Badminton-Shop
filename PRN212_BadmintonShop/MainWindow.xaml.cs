@@ -56,11 +56,11 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void BtnReports_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Reports View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+        MainContent.Content = new Views.AdminDashboardView();
     }
 
-    private void BtnSettings_Click(object sender, RoutedEventArgs e)
+    private void BtnMyHistory_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new System.Windows.Controls.TextBlock { Text = "Settings View here...", FontSize = 24, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+        MainContent.Content = new Views.CustomerHistoryView();
     }
 }

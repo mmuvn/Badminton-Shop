@@ -1,0 +1,92 @@
+<UserControl x:Class="PRN212_BadmintonShop.Views.AdminDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}">
+    <ScrollViewer>
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Stats Cards -->
+            <Grid Grid.Row="0" Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card Grid.Column="0" Padding="24" Background="{DynamicResource PrimaryHueMidBrush}" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                    <StackPanel>
+                        <TextBlock Text="Total Income" FontSize="16" Opacity="0.8"/>
+                        <TextBlock x:Name="txtTotalIncome" Text="0₫" FontSize="32" FontWeight="Bold" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Column="2" Padding="24" Background="{DynamicResource SecondaryHueMidBrush}" Foreground="{DynamicResource SecondaryHueMidForegroundBrush}">
+                    <StackPanel>
+                        <TextBlock Text="Completed Services" FontSize="16" Opacity="0.8"/>
+                        <TextBlock x:Name="txtCompletedServices" Text="0" FontSize="32" FontWeight="Bold" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
+
+            <!-- Weekly Breakdowns -->
+            <TextBlock Grid.Row="1" Text="Weekly Breakdowns" FontSize="20" FontWeight="Bold" Margin="0,0,0,16"/>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                    <TextBlock Text="Revenue by Week" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <DataGrid x:Name="dgWeeklyRevenue" AutoGenerateColumns="False" IsReadOnly="True" MaxHeight="250">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Year" Binding="{Binding OrderYear}"/>
+                            <DataGridTextColumn Header="Week" Binding="{Binding OrderWeek}"/>
+                            <DataGridTextColumn Header="Orders" Binding="{Binding OrderCount}"/>
+                            <DataGridTextColumn Header="Revenue" Binding="{Binding TotalRevenue, StringFormat={}{0:C}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="0,0,0,24">
+                    <TextBlock Text="Top Products by Week" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <DataGrid x:Name="dgWeeklyTopProducts" AutoGenerateColumns="False" IsReadOnly="True" MaxHeight="250">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Year" Binding="{Binding OrderYear}"/>
+                            <DataGridTextColumn Header="Week" Binding="{Binding OrderWeek}"/>
+                            <DataGridTextColumn Header="Product" Binding="{Binding ProductName}"/>
+                            <DataGridTextColumn Header="Units Sold" Binding="{Binding UnitsSold}"/>
+                            <DataGridTextColumn Header="Revenue" Binding="{Binding Revenue, StringFormat={}{0:C}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Margin="0,0,0,24">
+                    <TextBlock Text="Service Stats by Week" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <DataGrid x:Name="dgWeeklyServiceStats" AutoGenerateColumns="False" IsReadOnly="True" MaxHeight="250">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Year" Binding="{Binding RequestYear}"/>
+                            <DataGridTextColumn Header="Week" Binding="{Binding RequestWeek}"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding StatusName}"/>
+                            <DataGridTextColumn Header="Count" Binding="{Binding RequestCount}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
