@@ -93,10 +93,16 @@ public partial class ProductMasterDetailView : UserControl
     }
 
     private void SetFormReadOnly(bool isReadOnly)
+
     {
-      
+
+        cbCategory.IsEnabled = !isReadOnly;
+        txtTitle.IsReadOnly = isReadOnly;
+        txtBrand.IsReadOnly = isReadOnly;
+        txtPrice.IsReadOnly = isReadOnly;
+        txtStock.IsReadOnly = isReadOnly;
         txtDescription.IsReadOnly = isReadOnly;
-        
+
         foreach (UIElement child in pnlDynamicFields.Children)
         {
             if (child is StackPanel sp)
