@@ -94,11 +94,7 @@ public partial class ProductMasterDetailView : UserControl
 
     private void SetFormReadOnly(bool isReadOnly)
     {
-        cbCategory.IsEnabled = !isReadOnly;
-        txtTitle.IsReadOnly = isReadOnly;
-        txtBrand.IsReadOnly = isReadOnly;
-        txtPrice.IsReadOnly = isReadOnly;
-        txtStock.IsReadOnly = isReadOnly;
+      
         txtDescription.IsReadOnly = isReadOnly;
         
         foreach (UIElement child in pnlDynamicFields.Children)
@@ -176,7 +172,7 @@ public partial class ProductMasterDetailView : UserControl
             AddDynamicField("Color", p?.GripDetail?.Color);
         }
         
-        SetFormReadOnly(IsCustomer); // Re-apply read-only state to new dynamic fields
+        SetFormReadOnly(IsCustomer);
     }
 
     private void AddDynamicField(string label, string? value)
@@ -289,10 +285,10 @@ public partial class ProductMasterDetailView : UserControl
             p.StockQuantity = stock;
             p.IsActive = true;
 
-            if (_selectedProduct == null) context.SaveChanges(); // Need ID for details
+            if (_selectedProduct == null) context.SaveChanges(); 
 
             var catName = ((Category)cbCategory.SelectedItem).CategoryName;
-            
+
             if (catName == "Racket")
             {
                 if (p.RacketDetail == null) { p.RacketDetail = new RacketDetail { ProductId = p.ProductId }; context.RacketDetails.Add(p.RacketDetail); }
@@ -306,7 +302,32 @@ public partial class ProductMasterDetailView : UserControl
                 p.ShoeDetail.Color = GetDynamicFieldValue("Color");
                 p.ShoeDetail.Size = GetDynamicFieldValue("Size");
             }
-            // ... similar logic for other categories. For brevity, assuming implemented.
+            else if (catName == "String")
+            {
+                if (p.StringDetail == null) { p.StringDetail = new StringDetail { ProductId = p.ProductId }; context.StringDetails.Add(p.StringDetail); }
+                p.StringDetail.Color = GetDynamicFieldValue("Color");
+                p.StringDetail.Durability = byte.TryParse(GetDynamicFieldValue("Durability"), out byte d) ? d : (byte)0;
+                p.StringDetail.Control = byte.TryParse(GetDynamicFieldValue("Control"), out byte c) ? c : (byte)0;
+                p.StringDetail.Repulsion = byte.TryParse(GetDynamicFieldValue("Repulsion"), out byte r) ? r : (byte)0;
+                p.StringDetail.ShockAbsorption = byte.TryParse(GetDynamicFieldValue("Shock Absorpsion"), out byte sa) ? sa : (byte)0;
+                p.StringDetail.Sound = byte.TryParse(GetDynamicFieldValue("Sound"), out byte s) ? s : (byte)0;
+            }
+            else if (catName == "Shirt")
+            {
+                if(p.ShirtDetail == null) { p.ShirtDetail = new ShirtDetail { ProductId = p.ProductId }; context.ShirtDetails.Add(p.ShirtDetail); }
+                p.ShirtDetail.Color = GetDynamicFieldValue("Color");
+                p.ShirtDetail.Size = GetDynamicFieldValue("Size");
+                p.ShirtDetail.SleeveType = GetDynamicFieldValue("Sleeve Type");
+                p.ShirtDetail.Material = GetDynamicFieldValue("Material");
+                p.ShirtDetail.Gender = GetDynamicFieldValue("Gender");
+            }
+            else if (catName == "Grip")
+            {
+                if (p.GripDetail == null) { p.GripDetail= new GripDetail { ProductId = p.ProductId }; context.GripDetails.Add(p.GripDetail); }
+                p.GripDetail.ThicknessMm = decimal.TryParse(GetDynamicFieldValue("Thickness(mm)"), out decimal th) ? th : null;
+                p.GripDetail.Color = GetDynamicFieldValue("Color");
+                p.GripDetail.Material = GetDynamicFieldValue("Material");
+            }
 
             context.SaveChanges();
             transaction.Commit();
@@ -327,7 +348,7 @@ public partial class ProductMasterDetailView : UserControl
         var p = context.Products.Find(_selectedProduct.ProductId);
         if (p != null)
         {
-            p.IsActive = false; // Soft delete
+            p.IsActive = false; 
             context.SaveChanges();
             LoadProducts(txtSearch.Text);
             BtnClearForm_Click(sender, e);
