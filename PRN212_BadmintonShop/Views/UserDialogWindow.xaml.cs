@@ -39,7 +39,7 @@ public partial class UserDialogWindow : Window
             {
                 Username = txtUsername.Text,
                 Email = txtEmail.Text,
-                PasswordHash = txtPassword.Text, // Plain text for now as approved
+                PasswordHash = txtPassword.Text, 
                 RoleId = role.RoleId,
                 IsActive = true
             };

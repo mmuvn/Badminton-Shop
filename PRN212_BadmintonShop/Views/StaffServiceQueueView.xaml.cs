@@ -14,7 +14,6 @@ public class ServiceQueueRow : INotifyPropertyChanged
     public string CustomerName { get; set; } = "";
     public string ServiceTypeName { get; set; } = "";
 
-    // Kept off-grid, shown via the View button instead of a crowded column.
     public string DetailText { get; set; } = "";
 
     private string _selectedStatus = "";
@@ -58,13 +57,13 @@ public partial class StaffServiceQueueView : UserControl
     {
         InitializeComponent();
         LoadRequests();
+        Loaded += (s, e) => LoadRequests();
     }
 
     private void LoadRequests()
     {
         using var context = new BadmintonShopDbContext();
 
-        // Queue = only requests not yet in a terminal state.
         var requests = context.ServiceRequests
             .Include(s => s.Customer)
             .Include(s => s.ServiceType)
@@ -131,8 +130,6 @@ public partial class StaffServiceQueueView : UserControl
 
             context.SaveChanges();
 
-            // Request is now Done or Cancel, so it drops out of the queue
-            // on reload. Done requests feed Admin's completed-services stat.
             LoadRequests();
         }
         catch (Exception ex)
