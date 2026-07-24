@@ -118,7 +118,7 @@ public partial class ProductMasterDetailView : UserControl
     private void PopulateForm(Product p)
     {
         cbCategory.SelectedValue = p.CategoryId;
-        cbCategory.IsEnabled = false; // Cannot change category after creation
+        cbCategory.IsEnabled = false; 
         
         txtTitle.Text = p.ProductName;
         txtBrand.Text = p.Brand;

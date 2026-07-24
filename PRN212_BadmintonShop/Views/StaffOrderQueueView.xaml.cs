@@ -42,8 +42,6 @@ public class OrderQueueRow : INotifyPropertyChanged
 
     public bool ShowCancelReason => SelectedStatus == "Cancelled";
 
-    // Save only lights up once the target status is a terminal one:
-    // Completed outright, or Cancelled with a reason typed in.
     public bool IsSaveEnabled =>
         SelectedStatus == "Completed" ||
         (SelectedStatus == "Cancelled" && !string.IsNullOrWhiteSpace(CancelReason));
@@ -64,7 +62,6 @@ public partial class StaffOrderQueueView : UserControl
     {
         using var context = new BadmintonShopDbContext();
 
-        // Queue = only orders not yet in a terminal state.
         var orders = context.Orders
             .Include(o => o.Customer)
             .Include(o => o.OrderStatus)
@@ -105,9 +102,6 @@ public partial class StaffOrderQueueView : UserControl
 
             context.SaveChanges();
 
-            // Order is now Completed or Cancelled, so it drops out of the
-            // queue on reload. Completed orders feed Admin stats automatically
-            // since those are just queries over Orders/Payments by status.
             LoadOrders();
         }
         catch (Exception ex)
