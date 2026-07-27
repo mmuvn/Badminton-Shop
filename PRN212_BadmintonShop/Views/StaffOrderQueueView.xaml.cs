@@ -76,7 +76,7 @@ public partial class StaffOrderQueueView : UserControl
             OrderId = o.OrderId,
             CustomerName = o.Customer.FullName,
             OrderDate = o.OrderDate,
-            TotalAmount = o.TotalAmount,
+            TotalAmount = o.OrderItems.Sum(oi => oi.Quantity * oi.UnitPrice),
             SelectedStatus = o.OrderStatus.StatusName
         }).ToList();
 
