@@ -43,7 +43,7 @@ public class OrderQueueRow : INotifyPropertyChanged
     public bool ShowCancelReason => SelectedStatus == "Cancelled";
 
     public bool IsSaveEnabled =>
-        SelectedStatus == "Completed" ||
+        SelectedStatus == "Completed" || SelectedStatus == "Paid" ||
         (SelectedStatus == "Cancelled" && !string.IsNullOrWhiteSpace(CancelReason));
 
     public event PropertyChangedEventHandler? PropertyChanged;

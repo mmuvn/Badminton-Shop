@@ -44,7 +44,7 @@ public class ServiceQueueRow : INotifyPropertyChanged
     public bool ShowCancelReason => SelectedStatus == "Cancel";
 
     public bool IsSaveEnabled =>
-        SelectedStatus == "Done" ||
+        SelectedStatus == "Done" || SelectedStatus == "Doing" ||
         (SelectedStatus == "Cancel" && !string.IsNullOrWhiteSpace(CancelReason));
 
     public event PropertyChangedEventHandler? PropertyChanged;
