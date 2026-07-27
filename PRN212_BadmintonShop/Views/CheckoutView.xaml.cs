@@ -94,7 +94,7 @@ public partial class CheckoutView : UserControl
             else if (item.Type == "Service")
             {
                 var sr = context.ServiceRequests.Find(item.Id);
-                if (sr != null) context.ServiceRequests.Remove(sr); // or cancel
+                if (sr != null) context.ServiceRequests.Remove(sr); 
             }
             context.SaveChanges();
             LoadCart();
@@ -122,7 +122,6 @@ public partial class CheckoutView : UserControl
 
             if (cart == null) throw new Exception("Cart not found.");
 
-            // 1. Create Order
             var orderStatus = context.OrderStatuses.FirstOrDefault(s => s.StatusName == "Pending")?.OrderStatusId ?? 1;
             
             decimal totalAmount = _items.Sum(i => i.LineTotal);
@@ -135,9 +134,8 @@ public partial class CheckoutView : UserControl
                 ShippingAddress = AppState.CurrentUser.Address ?? "Store Pickup"
             };
             context.Orders.Add(order);
-            context.SaveChanges(); // get OrderId
+            context.SaveChanges();
 
-            // 2. Add OrderItems & Product Payment
             if (cart.CartItems.Any())
             {
                 decimal productTotal = 0;
@@ -151,20 +149,13 @@ public partial class CheckoutView : UserControl
                         UnitPrice = ci.Product.Price
                     });
                     
-                    // Deduct stock
                     var prod = context.Products.Find(ci.ProductId);
                     if (prod != null) prod.StockQuantity -= ci.Quantity;
                     
                     productTotal += (ci.Quantity * ci.Product.Price);
                 }
-
-                if (productTotal > 0)
-                {
-                    // No Payment table needed
-                }
             }
 
-            // 3. Handle Service Requests & Service Payments
             var unpaidServices = cart.ServiceRequests.Where(s => !s.IsPaid).ToList();
             foreach (var sr in unpaidServices)
             {
@@ -172,7 +163,6 @@ public partial class CheckoutView : UserControl
                 sr.OrderId = order.OrderId;
             }
 
-            // 4. Clear CartItems
             context.CartItems.RemoveRange(cart.CartItems);
 
             context.SaveChanges();
